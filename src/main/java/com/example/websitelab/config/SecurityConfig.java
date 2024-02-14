@@ -46,10 +46,10 @@ public class SecurityConfig {
         http
 
                 .authorizeHttpRequests((authorizeExchange) -> authorizeExchange
-                        .requestMatchers("/client/**").permitAll()
-                        .requestMatchers("/intern/**","/reviews/**").permitAll()
+                        .requestMatchers("/api/client/**").permitAll()
+                        .requestMatchers("/api/intern/**","/reviews/**").permitAll()
                         .requestMatchers("/swagger-ui.html/**", "/swagger-ui/**", "/v3/api-docs/**").hasRole("ADMIN")
-                        .requestMatchers("/admin/").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/").hasRole("ADMIN")
                         .anyRequest().hasRole("ADMIN"))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)

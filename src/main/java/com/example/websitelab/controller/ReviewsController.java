@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/reviews")
+@RequestMapping("/api/reviews")
 @Tag(name= "Api для отзывов")
 public class ReviewsController {
     private final ReviewsService reviewsService;

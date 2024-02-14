@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/image")
+@RequestMapping("/api/image")
 @Tag(name= "В РАЗРАБОТКЕ")
 public class ImageController {
 

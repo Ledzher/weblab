@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/dev")
+@RequestMapping("/api/dev")
 @RequiredArgsConstructor
 @Tag(name= "В РАЗРАБОТКЕ Api для разрабов")
 public class DevController {

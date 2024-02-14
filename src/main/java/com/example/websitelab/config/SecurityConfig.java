@@ -61,7 +61,7 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         CorsConfigurationSource source = request -> {
             CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedOrigins(Arrays.asList("http://localhost:8081"));
+            config.setAllowedOrigins(Arrays.asList("*"));
             config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
             config.setAllowedHeaders(Arrays.asList("Origin", "X-Requested-With", "Content-Type", "Accept"));
             return config;

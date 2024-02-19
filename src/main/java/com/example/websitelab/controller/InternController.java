@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/intern")
 @RequiredArgsConstructor
-@RequestMapping("/api/intern")
+
 @Tag(name = "Api для стажера")
 public class InternController {
 

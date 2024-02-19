@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class SecurityConfig {
@@ -39,29 +40,11 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-
-                .authorizeHttpRequests((authorizeExchange) -> authorizeExchange
-                        .requestMatchers("/api/client/**").permitAll()
-                        .requestMatchers("/api/intern/**","/reviews/**").permitAll()
-                        .requestMatchers("/swagger-ui.html/**", "/swagger-ui/**", "/v3/api-docs/**").hasRole("ADMIN")
-                        .requestMatchers("/api/admin/").hasRole("ADMIN")
-                        .anyRequest().hasRole("ADMIN"))
-                .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable)
-                .httpBasic(Customizer.withDefaults())
-                .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
     @Bean
     public CorsFilter corsFilter() {
         CorsConfigurationSource source = request -> {
             CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedOrigins(Arrays.asList("*"));
+            config.setAllowedOrigins(List.of("*"));
             config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
             config.setAllowedHeaders(Arrays.asList("Origin", "X-Requested-With", "Content-Type", "Accept"));
             return config;
@@ -69,5 +52,22 @@ public class SecurityConfig {
 
         return new CorsFilter(source);
     }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(Customizer.withDefaults())
+                .authorizeHttpRequests((request) -> request
+                        .requestMatchers("/intern/**","/reviews/**","/client/**").permitAll()
+                        .requestMatchers("/swagger-ui.html/**", "/swagger-ui/**", "/v3/api-docs/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/").hasRole("ADMIN")
+                        .anyRequest().authenticated())
+
+                .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+    }
+
 }
 
